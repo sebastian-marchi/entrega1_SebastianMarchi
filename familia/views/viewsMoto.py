@@ -1,15 +1,15 @@
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseBadRequest
 from django.template import loader
 from django.shortcuts import render
-from familia.forms.forms import AutoForm, BuscarAutosForm
+from familia.forms.forms_moto import MotoForm, BuscarMotosForm
 
-from familia.models.Auto import Auto
+from familia.models.Moto import Moto
 
-def index(request):
-    autos = Auto.objects.all()
-    template = loader.get_template('familia/lista_autos.html')
+def indexMoto(request):
+    motos = Moto.objects.all()
+    template = loader.get_template('familia/lista_motos.html')
     context = {
-        'autos': autos,
+        'motos': motos,
     }
     return HttpResponse(template.render(context, request))
 
@@ -17,39 +17,40 @@ def index(request):
 def agregar(request):
     '''
     TODO: agregar un mensaje en el template index.html que avise al usuario que 
-    la auto fue cargada con éxito
+    la moto fue cargada con éxito
     '''
 
     if request.method == "POST":
-        form = AutoForm(request.POST)
+        form = MotoForm(request.POST)
         if form.is_valid():
 
             marca = form.cleaned_data['marca']
             modelo = form.cleaned_data['modelo']
+            tipo = form.cleaned_data ['tipo']
             anio = form.cleaned_data['anio']
             km = form.cleaned_data['km']
-            Auto(marca=marca, modelo=modelo, anio=anio, km=km).save()
+            Moto(marca=marca, modelo=modelo, anio=anio, tipo=tipo).save()
 
-            return HttpResponseRedirect("/")
+            return HttpResponseRedirect("/moto/")
     elif request.method == "GET":
-        form = AutoForm()
+        formMoto = MotoForm()
     else:
         return HttpResponseBadRequest("Error no conzco ese metodo para esta request")
 
     
-    return render(request, 'familia/form_carga.html', {'form': form})
+    return render(request, 'familia/form_cargaMoto.html', {'formMoto': formMoto})
 
 
 def borrar(request, identificador):
     '''
     TODO: agregar un mensaje en el template index.html que avise al usuario que 
-    la auto fue eliminada con éxito        
+    la Moto fue eliminada con éxito        
     '''
     if request.method == "GET":
-        auto = Auto.objects.filter(id=int(identificador)).first()
-        if auto:
-            auto.delete()
-        return HttpResponseRedirect("/")
+        moto = Moto.objects.filter(id=int(identificador)).first()
+        if moto:
+            moto.delete()
+        return HttpResponseRedirect("/moto/")
     else:
         return HttpResponseBadRequest("Error no conzco ese metodo para esta request")
 
@@ -63,14 +64,14 @@ def actualizar(request, identificador):
 
 def buscar(request):
     if request.method == "GET":
-        form_busqueda = BuscarAutosForm()
+        form_busqueda = BuscarMotosForm()
         return render(request, 'familia/form_busqueda.html', {"form_busqueda": form_busqueda})
 
     elif request.method == "POST":
-        form_busqueda = BuscarAutosForm(request.POST)
+        form_busqueda = BuscarMotosForm(request.POST)
         if form_busqueda.is_valid():
             palabra_a_buscar = form_busqueda.cleaned_data['palabra_a_buscar']
-            autos = Auto.objects.filter(marca__icontains=palabra_a_buscar)
+            motos = Moto.objects.filter(marca__icontains=palabra_a_buscar)
 
-        return  render(request, 'familia/lista_autos.html', {"autos": autos})
+        return  render(request, 'familia/lista_motos.html', {"motos": motos})
     

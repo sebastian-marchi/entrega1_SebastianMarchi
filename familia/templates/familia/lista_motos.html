@@ -4,41 +4,44 @@
 
 {% block cuerpo %}
 <div class="container">    
-  
   <div class="row">
     <div class="col">
       {% url 'agregar' as agregar_url %}
+      {% url 'agregarMoto' as agregarMoto_url %}
+      {% url 'agregarCamioneta' as agregarCamioneta_url %}
       {% url 'buscar' as buscar_url %}
       {% bootstrap_button "Auto" button_class="btn-success" button_type="link" href=agregar_url %}
-      {% bootstrap_button "Moto" button_class="btn-success" button_type="link" href=agregar_url %} 
-      {% bootstrap_button "Camioneta" button_class="btn-success" button_type="link" href=agregar_url %}  
+      {% bootstrap_button "Moto" button_class="btn-success" button_type="link" href=agregarMoto_url %} 
+      {% bootstrap_button "Camioneta" button_class="btn-success" button_type="link" href=agregarCamioneta_url %}  
       {% bootstrap_button "Buscar" button_class="btn-success" button_type="link" href=buscar_url %}  
     <div>
   <div>
 
   <div class="row">
     <div class="col">
-        {% if autos %}
+        {% if motos %}
         <table class="table">
             <thead>
                 <th scope="col">Identificador</th>
                 <th scope="col">Marca</th>
                 <th scope="col">Modelo</th>
+                <th scope="col">Tipo</th>
                 <th scope="col">Año</th>
                 <th scope="col">Km</th>
                 <th scope="col">Acciones</th>
             </thead>
         
-            {% for a in autos %}
+            {% for m in motos %}
             <tbody>
                 <tr>
-                    <th scope="row">{{a.id}} </th>
-                    <td> {{a.marca}} </td>
-                    <td> {{a.modelo}} </td>
-                    <td> {{a.anio}} </td>
-                    <td> {{a.km}} </td>
-                    {% url 'borrar' identificador=a.id as borrar_url %}
-                    <td>{% bootstrap_button "Borrar" size="sm" button_class="btn-danger" button_type="link" href=borrar_url %}</td>
+                    <th scope="row">{{m.id}} </th>
+                    <td> {{m.marca}} </td>
+                    <td> {{m.modelo}} </td>
+                    <td> {{m.tipo}} </td>
+                    <td> {{m.anio}} </td>
+                    <td> {{m.km}} </td>
+                    {% url 'borrarMoto' identificador=m.id as borrarMoto_url %}
+                    <td>{% bootstrap_button "Borrar" size="sm" button_class="btn-danger" button_type="link" href=borrarMoto_url %}</td>
                 </tr>  
             </tbody>
             {% endfor %}
