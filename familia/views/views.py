@@ -15,15 +15,9 @@ def index(request):
 
 
 def agregar(request):
-    '''
-    TODO: agregar un mensaje en el template index.html que avise al usuario que 
-    la auto fue cargada con éxito
-    '''
-
     if request.method == "POST":
         form = AutoForm(request.POST)
         if form.is_valid():
-
             marca = form.cleaned_data['marca']
             modelo = form.cleaned_data['modelo']
             anio = form.cleaned_data['anio']
@@ -41,10 +35,6 @@ def agregar(request):
 
 
 def borrar(request, identificador):
-    '''
-    TODO: agregar un mensaje en el template index.html que avise al usuario que 
-    la auto fue eliminada con éxito        
-    '''
     if request.method == "GET":
         auto = Auto.objects.filter(id=int(identificador)).first()
         if auto:
@@ -52,13 +42,6 @@ def borrar(request, identificador):
         return HttpResponseRedirect("/")
     else:
         return HttpResponseBadRequest("Error no conzco ese metodo para esta request")
-
-
-def actualizar(request, identificador):
-    '''
-    TODO: implementar una vista para actualización
-    '''
-    pass
 
 
 def buscar(request):

@@ -4,20 +4,20 @@
 
 {% block cuerpo %}
 <div class="container">
-   <div class="row">
-     <div class="col">
-      <h1>PUBLIQUE SU AUTO</h1>
-     </div>
-     </div>
-     <div class="row">
-     <div class="col">
-      <form action="{% url  'agregar'%}" method="post">
-         {% csrf_token %} 
-         {% bootstrap_form form %}
-         {% bootstrap_button "Guardar" button_type="submit" button_class="btn-primary" %}
-      </form>
-     </div>
-   </div>
- </div>
+    <div class="row">
+      <div class="col">
+        <h1>PUBLIQUE SU AUTO</h1>
+        </div>
+        </div>
+        <div class="row">
+        <div class="col">
+        <form action="{% url  'agregar'%}" method="post">
+          {% csrf_token %} 
+          {% bootstrap_form form %}
+          {% bootstrap_button "Guardar" button_type="submit" button_class="btn-primary" %}
+        </form>
+      </div>
+    </div>
+  </div>
 {% endblock %}
 

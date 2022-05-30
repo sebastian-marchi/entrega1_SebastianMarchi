@@ -64,13 +64,13 @@ def actualizar(request, identificador):
 
 def buscar(request):
     if request.method == "GET":
-        form_busqueda = BuscarMotosForm()
-        return render(request, 'familia/form_busqueda.html', {"form_busqueda": form_busqueda})
+        form_busquedaMoto = BuscarMotosForm()
+        return render(request, 'familia/form_busquedaMoto.html', {"form_busquedaMoto": form_busquedaMoto})
 
     elif request.method == "POST":
-        form_busqueda = BuscarMotosForm(request.POST)
-        if form_busqueda.is_valid():
-            palabra_a_buscar = form_busqueda.cleaned_data['palabra_a_buscar']
+        form_busquedaMoto = BuscarMotosForm(request.POST)
+        if form_busquedaMoto.is_valid():
+            palabra_a_buscar = form_busquedaMoto.cleaned_data['palabra_a_buscar']
             motos = Moto.objects.filter(marca__icontains=palabra_a_buscar)
 
         return  render(request, 'familia/lista_motos.html', {"motos": motos})
